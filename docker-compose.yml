@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+    nginx:
+        image: nginx
+        container_name: majauto-nginx
+        ports:
+            - "8084:80"
+        volumes:
+            - ./docker/nginx/conf.d:/etc/nginx/conf.d
+            - ./public:/opt/epack/epack-api-maj-auto/public
+        depends_on:
+            - php
+    php:
+        build: .
+        container_name: majauto-php
+        volumes:
+            - ./docker/php/upload.ini:/usr/local/etc/php/conf.d/upload.ini
+            - .:/opt/epack/epack-api-maj-auto
